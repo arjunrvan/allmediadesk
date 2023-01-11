@@ -47,41 +47,38 @@
   <body>
     <h1>Peter Meditation</h1>
     <form>
-      <input
-        type="text"
-        id="expression"
-        placeholder="Enter a number"
-      />
+      <input type="text" id="expression" placeholder="Enter a number" />
       <button type="button" onclick="solveResult()">Calculate</button>
     </form>
     <div id="result"></div>
 
     <script>
       const peterMeditation = (number) => {
-      /**
-       * checks whether all digits in a number are in descending order
-       * @param {String} number
-       */
-      const isAscending = (number) => {
-        const digits = number.toString().split('').map((n) => parseInt(n));
-        return digits.every((digit, index) => index === 0 || digit >= digits[index - 1]);
-      }
+        const isAscending = (number) => {
+          const digits = number
+            .toString()
+            .split("")
+            .map((n) => parseInt(n));
+          return digits.every(
+            (digit, index) => index === 0 || digit >= digits[index - 1]
+          );
+        };
 
-      const findTheLastCheckedNumber = (lastNumber) => {
-        while (!isAscending(lastNumber)) {
-          lastNumber--;
-        }
-        return lastNumber;
+        const findTheLastCheckedNumber = (lastNumber) => {
+          while (!isAscending(lastNumber)) {
+            lastNumber--;
+          }
+          return lastNumber;
+        };
+
+        return findTheLastCheckedNumber(number);
       };
 
-      return findTheLastCheckedNumber(number);
-    };
-
-      function solveResult() {
-        let input = document.getElementById("expression").value;
-        let result = peterMeditation(input);
+      const solveResult = () => {
+        const input = document.getElementById("expression").value;
+        const result = peterMeditation(input);
         document.getElementById("result").innerHTML = "Result: " + result;
-      }
+      };
     </script>
   </body>
 </html>

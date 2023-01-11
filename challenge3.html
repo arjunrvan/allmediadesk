@@ -47,16 +47,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
       const calculateTerm = (term) => {
-        // First, evaluate any operations inside parentheses
         while (term.indexOf("(") !== -1) {
-          let start = term.lastIndexOf("(");
-          let end = term.indexOf(")", start);
-          let subterm = term.substring(start + 1, end);
-          let result = calculateTerm(subterm);
+          const start = term.lastIndexOf("(");
+          const end = term.indexOf(")", start);
+          const subterm = term.substring(start + 1, end);
+          const result = calculateTerm(subterm);
           term = term.substring(0, start) + result + term.substring(end + 1);
         }
 
-        // Next, evaluate any multiplication or division
         while (term.indexOf("*") !== -1 || term.indexOf("/") !== -1) {
           let opIndex = -1;
           if (term.indexOf("*") !== -1) {
@@ -65,9 +63,9 @@
             opIndex = term.indexOf("/");
           }
 
-          let leftHand = parseFloat(term.substring(0, opIndex));
-          let rightHand = parseFloat(term.substring(opIndex + 1));
-          let operator = term[opIndex];
+          const leftHand = parseFloat(term.substring(0, opIndex));
+          const rightHand = parseFloat(term.substring(opIndex + 1));
+          const operator = term[opIndex];
           let result;
           if (operator === "*") {
             result = leftHand * rightHand;
@@ -80,7 +78,6 @@
             term.substring(opIndex + 1 + rightHand.toString().length);
         }
 
-        // Finally, evaluate any addition or subtraction
         while (term.indexOf("+") !== -1 || term.indexOf("-") !== -1) {
           let opIndex = -1;
           if (term.indexOf("+") !== -1) {
@@ -89,9 +86,9 @@
             opIndex = term.indexOf("-");
           }
 
-          let leftHand = parseFloat(term.substring(0, opIndex));
-          let rightHand = parseFloat(term.substring(opIndex + 1));
-          let operator = term[opIndex];
+          const leftHand = parseFloat(term.substring(0, opIndex));
+          const rightHand = parseFloat(term.substring(opIndex + 1));
+          const operator = term[opIndex];
           let result;
           if (operator === "+") {
             result = leftHand + rightHand;
@@ -107,21 +104,16 @@
         return parseFloat(term);
       };
 
-      function plotGraph(equation) {
-        var x, y;
-        var xCoords = [],
+      const plotGraph = (equation) => {
+        let x, y;
+        let xCoords = [],
           yCoords = [];
-        var minX = -10,
+        const minX = -10,
           maxX = 10,
           step = 1;
 
-        let xExists = false;
-        if (equation.match(/x/)) {
-          xExists = true;
-        }
-
         for (x = minX; x <= maxX; x += step) {
-          xExists
+          equation.match(/x/)
             ? (y = calculateTerm(equation.replace(/x/g, x)))
             : (y = calculateTerm(equation));
           xCoords.push(x);
@@ -129,7 +121,7 @@
         }
 
         // Plot the graph using Chart.js
-        var ctx = document.getElementById("myChart").getContext("2d");
+        const ctx = document.getElementById("myChart").getContext("2d");
         new Chart(ctx, {
           type: "line",
           data: {
@@ -152,12 +144,12 @@
             },
           },
         });
-      }
+      };
 
-      function solveResult() {
-        let input = document.getElementById("expression").value;
+      const solveResult = () => {
+        const input = document.getElementById("expression").value;
         plotGraph(input);
-      }
+      };
     </script>
   </body>
 </html>

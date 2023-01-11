@@ -60,10 +60,10 @@
       const calculateTerm = (term) => {
         // First, evaluate any operations inside parentheses
         while (term.indexOf("(") !== -1) {
-          let start = term.lastIndexOf("(");
-          let end = term.indexOf(")", start);
-          let subterm = term.substring(start + 1, end);
-          let result = calculateTerm(subterm);
+          const start = term.lastIndexOf("(");
+          const end = term.indexOf(")", start);
+          const subterm = term.substring(start + 1, end);
+          const result = calculateTerm(subterm);
           term = term.substring(0, start) + result + term.substring(end + 1);
         }
 
@@ -76,9 +76,9 @@
             opIndex = term.indexOf("/");
           }
 
-          let leftHand = parseFloat(term.substring(0, opIndex));
-          let rightHand = parseFloat(term.substring(opIndex + 1));
-          let operator = term[opIndex];
+          const leftHand = parseFloat(term.substring(0, opIndex));
+          const rightHand = parseFloat(term.substring(opIndex + 1));
+          const operator = term[opIndex];
           let result;
           if (operator === "*") {
             result = leftHand * rightHand;
@@ -100,9 +100,9 @@
             opIndex = term.indexOf("-");
           }
 
-          let leftHand = parseFloat(term.substring(0, opIndex));
-          let rightHand = parseFloat(term.substring(opIndex + 1));
-          let operator = term[opIndex];
+          const leftHand = parseFloat(term.substring(0, opIndex));
+          const rightHand = parseFloat(term.substring(opIndex + 1));
+          const operator = term[opIndex];
           let result;
           if (operator === "+") {
             result = leftHand + rightHand;
@@ -118,11 +118,11 @@
         return parseFloat(term);
       };
 
-      function solveResult() {
+      const solveResult = () => {
         const term = document.getElementById("expression").value;
         const result = calculateTerm(term);
         document.getElementById("result").innerHTML = "Result: " + result;
-      }
+      };
     </script>
   </body>
 </html>
