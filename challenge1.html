@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        font-size: 18px;
+        margin-right: 10px;
+        flex: 1;
+      }
+
+      button[type="button"] {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      #result {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Simple Calculator</h1>
+    <form>
+      <input
+        type="text"
+        id="expression"
+        placeholder="Enter an arithmetic expression"
+      />
+      <button type="button" onclick="solveResult()">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+      const calculateTerm = (term) => {
+        // First, evaluate any operations inside parentheses
+        while (term.indexOf("(") !== -1) {
+          let start = term.lastIndexOf("(");
+          let end = term.indexOf(")", start);
+          let subterm = term.substring(start + 1, end);
+          let result = calculateTerm(subterm);
+          term = term.substring(0, start) + result + term.substring(end + 1);
+        }
+
+        // Next, evaluate any multiplication or division
+        while (term.indexOf("*") !== -1 || term.indexOf("/") !== -1) {
+          let opIndex = -1;
+          if (term.indexOf("*") !== -1) {
+            opIndex = term.indexOf("*");
+          } else {
+            opIndex = term.indexOf("/");
+          }
+
+          let leftHand = parseFloat(term.substring(0, opIndex));
+          let rightHand = parseFloat(term.substring(opIndex + 1));
+          let operator = term[opIndex];
+          let result;
+          if (operator === "*") {
+            result = leftHand * rightHand;
+          } else {
+            result = leftHand / rightHand;
+          }
+          term =
+            term.substring(0, opIndex - leftHand.toString().length) +
+            result +
+            term.substring(opIndex + 1 + rightHand.toString().length);
+        }
+
+        // Finally, evaluate any addition or subtraction
+        while (term.indexOf("+") !== -1 || term.indexOf("-") !== -1) {
+          let opIndex = -1;
+          if (term.indexOf("+") !== -1) {
+            opIndex = term.indexOf("+");
+          } else {
+            opIndex = term.indexOf("-");
+          }
+
+          let leftHand = parseFloat(term.substring(0, opIndex));
+          let rightHand = parseFloat(term.substring(opIndex + 1));
+          let operator = term[opIndex];
+          let result;
+          if (operator === "+") {
+            result = leftHand + rightHand;
+          } else {
+            result = leftHand - rightHand;
+          }
+          term =
+            term.substring(0, opIndex - leftHand.toString().length) +
+            result +
+            term.substring(opIndex + 1 + rightHand.toString().length);
+        }
+
+        return parseFloat(term);
+      };
+
+      function solveResult() {
+        const term = document.getElementById("expression").value;
+        const result = calculateTerm(term);
+        document.getElementById("result").innerHTML = "Result: " + result;
+      }
+    </script>
+  </body>
+</html>

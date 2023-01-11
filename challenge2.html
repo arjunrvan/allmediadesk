@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Peter Meditation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        font-size: 18px;
+        margin-right: 10px;
+        flex: 1;
+      }
+
+      button[type="button"] {
+        padding: 10px 20px;
+        font-size: 18px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      #result {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Peter Meditation</h1>
+    <form>
+      <input
+        type="text"
+        id="expression"
+        placeholder="Enter a number"
+      />
+      <button type="button" onclick="solveResult()">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+      const peterMeditation = (number) => {
+      /**
+       * checks whether all digits in a number are in descending order
+       * @param {String} number
+       */
+      const isAscending = (number) => {
+        const digits = number.toString().split('').map((n) => parseInt(n));
+        return digits.every((digit, index) => index === 0 || digit >= digits[index - 1]);
+      }
+
+      const findTheLastCheckedNumber = (lastNumber) => {
+        while (!isAscending(lastNumber)) {
+          lastNumber--;
+        }
+        return lastNumber;
+      };
+
+      return findTheLastCheckedNumber(number);
+    };
+
+      function solveResult() {
+        let input = document.getElementById("expression").value;
+        let result = peterMeditation(input);
+        document.getElementById("result").innerHTML = "Result: " + result;
+      }
+    </script>
+  </body>
+</html>
